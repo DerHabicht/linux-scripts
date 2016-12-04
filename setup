@@ -1,0 +1,37 @@
+# THUS Utils
+mkdir ~/bin
+cd ~/bin
+ln -s ~/lib/thus_utils page
+ln -s ~/lib/thus_utils gzpg
+ln -s ~/lib/thus_utils update
+
+# bash_profile and bashrc
+mkdir -p ~/.config/bashrc
+cd ~/.config/bashrc
+git clone git@git.the-hawk.us:misc/cfg/vimrc.git
+cd ~
+ln -s .config/bashrc/bash_profile .bash_profile
+ln -s .config/bashrc/bashrc .bashrc
+
+# vimrc
+mkdir ~/.vim
+cd ~/.vim
+git clone git@git.the-hawk.us:misc/cfg/bashrc.git
+cd ~
+ln -s .vim/vimrc/vimrc .vimrc
+ln -s .vim/vimrc/gvimrc .gvimrc
+
+# taskrc
+mkdir ~/.task
+cd ~/.task
+git clone git@git.the-hawk.us:misc/cfg/taskrc.git
+cd ~
+ln -s .vim/vimrc/vimrc .vimrc
+ln -s .vim/vimrc/gvimrc .gvimrc
+
+# i3
+mkdir -p ~/.config/i3
+cd ~/.config/i3
+git clone git@git.the-hawk.us:misc/cfg/i3rc.git
+ln -s i3rc/config
+
