@@ -12,6 +12,4 @@ uname -r | grep fc
 if [[ $? == 0 ]]
 then
     sudo dnf -y update
-else
-    sudo yum -y update
 fi
