@@ -17,7 +17,7 @@ mplayer -msglevel all=0 ~/lib/thus_utils/beeps/computerbeep_9.mp3
 
 while [ "$end" -ge `date +%s` ]
 do
-    echo -ne "$(date -u --date @$(($end - `date +%s` )) +%H:%M:%S)\r"
+    echo -ne "Pomodoro: $(date -u --date @$(($end - `date +%s` )) +%H:%M:%S)\r"
 
     if [ "$next_tick" -le `date +%s` ]
     then
