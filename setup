@@ -2,6 +2,7 @@
 mkdir ~/bin
 cd ~/bin
 ln -s ~/lib/thus_utils/page page
+ln -s ~/lib/thus_utils/pom pom
 ln -s ~/lib/thus_utils/gzpg gzpg
 ln -s ~/lib/thus_utils/update update
 

@@ -1,0 +1,36 @@
+seconds=1500
+tick=30
+
+clear
+
+exec 3>&2
+exec 2> /dev/null
+
+timetrap sheet pom
+timetrap out
+
+end=$((`date +%s` + $seconds))
+next_tick=$((`date +%s` + $tick))
+timetrap in
+
+mplayer -msglevel all=0 ~/lib/thus_utils/beeps/computerbeep_9.mp3
+
+while [ "$end" -ge `date +%s` ]
+do
+    echo -ne "$(date -u --date @$(($end - `date +%s` )) +%H:%M:%S)\r"
+
+    if [ "$next_tick" -le `date +%s` ]
+    then
+        mplayer -msglevel all=0 ~/lib/thus_utils/beeps/computerbeep_4.mp3
+        next_tick=$((`date +%s` + $tick))
+    fi
+
+done
+
+mplayer -msglevel all=0 ~/lib/thus_utils/beeps/alert04.mp3
+timetrap sheet pom
+timetrap out
+
+exec 2>&3
+
+timetrap display
