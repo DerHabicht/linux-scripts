@@ -1,3 +1,5 @@
+#!/bin/bash
+
 cd ~/.vim/vimrc
 git pull
 cd ~/.task/taskrc

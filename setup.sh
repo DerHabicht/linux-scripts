@@ -1,10 +1,11 @@
+#!/bin/bash
+
 # THUS Utils
 mkdir ~/bin
 cd ~/bin
-ln -s ~/lib/thus_utils/page page
-ln -s ~/lib/thus_utils/pom pom
-ln -s ~/lib/thus_utils/gzpg gzpg
-ln -s ~/lib/thus_utils/update update
+ln -s ~/lib/thus_utils/pom.sh pom
+ln -s ~/lib/thus_utils/gzless.sh gzless
+ln -s ~/lib/thus_utils/update.sh update
 
 # bash_profile and bashrc
 mkdir ~/.config/

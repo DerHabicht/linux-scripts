@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Constants
 #   - seconds: the entire length of the timer in seconds (1500s = 25min)
 #   - tick: play a 'tick' sound at this interval (in seconds)
