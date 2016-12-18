@@ -44,6 +44,3 @@ ln -s i3rc/config
 # timetrap
 cd ~
 ln -s Dropbox/databases/timetrap.db .timetrap.db
-
-# Create SSH keys
-ssh-keygen -b 4096
