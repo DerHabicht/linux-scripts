@@ -41,8 +41,8 @@ ln -s ~/Dropbox/databases/timetrap.db ~/.timetrap.db
 uname -r | grep fc
 if [[ $? != 0 ]]
 then
-    crontab -l > temp
-    echo "* 00 * * * ~/bin/update" >> temp
-    crontab temp
-    rm temp
+    crontab -l > tempcron
+    echo "* 00 * * * ~/bin/update" >> tempcron
+    crontab tempcron
+    rm tempcron
 fi
