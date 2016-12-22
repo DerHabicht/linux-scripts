@@ -1,5 +1,19 @@
 #!/bin/bash
 
+if [ "$1" == "-r" ]
+then
+    echo "Are you sure you want to restart $HOSTNAME? (yes/no): "
+else
+    echo "Are you sure you want to shutdown $HOSTNAME? (yes/no): "
+fi
+
+read response
+
+if [ "$response" != "yes" ]
+then
+    exit
+fi
+
 # bash_profile and bashrc
 cd ~/.config/termrc
 git commit -a -m "Automated commit from $HOSTNAME"
