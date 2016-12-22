@@ -5,6 +5,7 @@ mkdir ~/bin
 ln -s ~/lib/thus_utils/pom.sh ~/bin/pom
 ln -s ~/lib/thus_utils/gzless.sh ~/bin/gzless
 ln -s ~/lib/thus_utils/update.sh ~/bin/update
+ln -s ~/lib/thus_utils/off.sh ~/bin/off
 
 # bash_profile and bashrc
 mkdir ~/.config/
