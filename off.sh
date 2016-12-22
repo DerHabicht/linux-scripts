@@ -39,5 +39,5 @@ if [ $1 == "-r" ]
 then
     reboot
 else
-    shutdown
+    poweroff
 fi
