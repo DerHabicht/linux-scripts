@@ -30,6 +30,7 @@ git commit -a -m "Automated commit from $HOSTNAME"
 git push
 
 # taskrc
+task context none
 cd ~/.task/taskrc
 git commit -a -m "Automated commit from $HOSTNAME"
 git push
