@@ -1,9 +1,13 @@
 #!/bin/bash
 
+cd ~/pim
+git pull
 cd ~/.vim/vimrc
 git pull
 cd ~/.task/taskrc
 git reset --hard HEAD
+git pull
+cd ~/.config/emacs
 git pull
 cd ~/.config/termrc
 git pull

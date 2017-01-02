@@ -14,11 +14,15 @@ then
     exit
 fi
 
+# pim
+cd ~/pim
+git commit -a -m "Automated commit from $HOSTNAME"
+git push
+
 # bash_profile and bashrc
 cd ~/.config/termrc
 git commit -a -m "Automated commit from $HOSTNAME"
 git push
-
 
 # vimrc
 cd ~/.vim/vimrc
@@ -27,6 +31,11 @@ git push
 
 # taskrc
 cd ~/.task/taskrc
+git commit -a -m "Automated commit from $HOSTNAME"
+git push
+
+# emacs
+cd ~/.config/emacs/
 git commit -a -m "Automated commit from $HOSTNAME"
 git push
 
