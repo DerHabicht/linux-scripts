@@ -16,16 +16,19 @@ fi
 
 # pim
 cd ~/pim
+git add *
 git commit -a -m "Automated commit from $HOSTNAME"
 git push
 
 # bash_profile and bashrc
 cd ~/.config/termrc
+git add *
 git commit -a -m "Automated commit from $HOSTNAME"
 git push
 
 # vimrc
 cd ~/.vim/vimrc
+git add *
 git commit -a -m "Automated commit from $HOSTNAME"
 git push
 
@@ -33,16 +36,19 @@ git push
 task context none
 task sync
 cd ~/.task/taskrc
+git add *
 git commit -a -m "Automated commit from $HOSTNAME"
 git push
 
 # emacs
 cd ~/.config/emacs/
+git add *
 git commit -a -m "Automated commit from $HOSTNAME"
 git push
 
 # i3
 cd ~/.config/i3/i3rc
+git add *
 git commit -a -m "Automated commit from $HOSTNAME"
 git push
 
