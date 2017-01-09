@@ -36,6 +36,7 @@ printf "%s\n" "${default_repos[@]}" >> ~/.proj_dirs
 
 while IFS= read -r line
 do
+    printf "\nCommitting `pwd`\n"
     cd "$line"
     git add *
     git commit -a -m "Automated commit from $HOSTNAME"
