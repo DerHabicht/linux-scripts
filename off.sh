@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # Git repositories to sync by default
-declare -a default_repos=("~/pim"
-                          "~/.config/termrc"
-                          "~/.vim/vimrc"
-                          "~/.task/taskrc"
-                          "~/.config/emacs"
-                          "~/.config/i3/i3rc")
+declare -a default_repos=("$HOME/pim"
+                          "$HOME/.config/termrc"
+                          "$HOME/.vim/vimrc"
+                          "$HOME/.task/taskrc"
+                          "$HOME/.config/emacs"
+                          "$HOME/.config/i3/i3rc")
 
 
 if [ "$1" == "-r" ]
