@@ -1,5 +1,6 @@
 #!/bin/bash
 
+task sync
 cd ~/pim
 git pull
 cd ~/.vim/vimrc
