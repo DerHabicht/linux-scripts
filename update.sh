@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd ~/lib/thus_utils
+git pull
 cd ~/pim
 git pull
 cd ~/.vim/vimrc
