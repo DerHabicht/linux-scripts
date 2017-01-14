@@ -1,20 +1,22 @@
 #!/bin/bash
 
-cd ~/lib/thus_utils
-git pull
-cd ~/pim
-git pull
-cd ~/.vim/vimrc
-git pull
-cd ~/.task/taskrc
-git reset --hard HEAD
-git pull
-cd ~/.config/emacs
-git pull
-cd ~/.config/termrc
-git pull
-cd ~/.config/i3/i3rc
-git pull
+source "$HOME/lib/thus_utils/default_repos.sh"
+
+# Grab the hard-coded/default repositories
+for repo in ${default_repos[@]}
+do
+    cd $repo
+    printf "\nPulling `pwd`...\n"
+    git pull
+done
+
+# Grab the repos in the active projects file
+while IFS= read -r line
+do
+    cd "$line"
+    printf "\nPulling `pwd`...\n"
+    git pull
+done < ~/.active_proj_dirs
 
 uname -r | grep fc
 if [[ $? == 0 ]]

@@ -27,7 +27,7 @@ ret_val=1
 while [ "$ret_val" != 0 ]
 do
     clear
-    echo "Attempting to ping $1                 "
+    echo "Attempting to ping $1...                 "
     mplayer -msglevel all=0 ~/lib/thus_utils/beeps/computerbeep_4.mp3
     ping -c 1 -W 5 "$1" > /dev/null
     ret_val=$?

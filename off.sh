@@ -1,14 +1,6 @@
 #!/bin/bash
 
-# Git repositories to sync by default
-declare -a default_repos=("$HOME/pim"
-                          "$HOME/lib/thus_utils"
-                          "$HOME/.config/termrc"
-                          "$HOME/.vim/vimrc"
-                          "$HOME/.task/taskrc"
-                          "$HOME/.config/emacs"
-                          "$HOME/.config/i3/i3rc")
-
+source "$HOME/lib/thus_utils/default_repos.sh"
 
 if [ "$1" == "-r" ]
 then
@@ -32,13 +24,14 @@ task context none
 task sync
 
 # Sync relevant Git repositories
+cat ~/.active_proj_dirs >> ~/.proj_dirs
 printf "%s\n" "${default_repos[@]}" >> ~/.proj_dirs
 
 
 while IFS= read -r line
 do
-    printf "\nCommitting `pwd`\n"
     cd "$line"
+    printf "\nCommitting `pwd`...\n"
     git add *
     git commit -a -m "Automated commit from $HOSTNAME"
     git push
