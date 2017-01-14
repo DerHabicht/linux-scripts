@@ -2,6 +2,9 @@
 
 source "$HOME/lib/thus_utils/default_repos.sh"
 
+task context none
+task sync
+
 # Grab the hard-coded/default repositories
 for repo in ${default_repos[@]}
 do
