@@ -3,9 +3,11 @@
 # THUS Utils
 mkdir ~/bin
 ln -s ~/lib/thus_utils/pom.sh ~/bin/pom
-ln -s ~/lib/thus_utils/gzless.sh ~/bin/gzless
 ln -s ~/lib/thus_utils/update.sh ~/bin/update
 ln -s ~/lib/thus_utils/off.sh ~/bin/off
+ln -s ~/lib/thus_utils/notify.sh ~/bin/notify
+ln -s ~/lib/thus_utils/register.sh ~/bin/register
+ln -s ~/lib/thus_utils/today.sh ~/bin/today
 
 # bash_profile and bashrc
 mkdir ~/.config/
