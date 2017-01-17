@@ -33,9 +33,22 @@ trap 'break' INT
 while [ "$end" -ge `date +%s` ]
 do
     # Draw the time remaining.
-    # The extra spaces at the end are to ensure that any characters accidentally
-    # thrown to the terminal will be overwritten on the next tick.
-    echo -ne "Pomodoro: $(date -u --date @$(($end - `date +%s` )) +%H:%M:%S)      \r"
+    # The extra spaces at the end are to ensure that any characters
+    # accidentally thrown to the terminal will be overwritten on the next tick.
+    echo -ne "Pomodoro ($interruption): $(date -u --date @$(($end - `date +%s` )) +%H:%M:%S)             \r"
+
+    read -s -t 0.1 -N 1 key
+    if [ "$key" == "i" ]
+    then
+        interruption="$interruption'"
+        timetrap sheet pom
+        timetrap edit "$interruption" > /dev/null
+    elif [ "$key" = "e" ]
+    then
+        interruption="$interruption-"
+        timetrap sheet pom
+        timetrap edit "$interruption" > /dev/null
+    fi
 
     # Play the 'tick' sound
     if [ "$next_tick" -le `date +%s` ]
