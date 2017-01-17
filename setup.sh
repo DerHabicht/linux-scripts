@@ -8,6 +8,8 @@ ln -s ~/lib/thus_utils/off.sh ~/bin/off
 ln -s ~/lib/thus_utils/notify.sh ~/bin/notify
 ln -s ~/lib/thus_utils/register.sh ~/bin/register
 ln -s ~/lib/thus_utils/today.sh ~/bin/today
+ln -s ~/lib/thus_utils/start.sh ~/bin/start
+ln -s ~/lib/thus_utils/stop.sh ~/bin/stop
 
 # bash_profile and bashrc
 mkdir ~/.config/
