@@ -11,6 +11,9 @@ ln -s ~/lib/thus_utils/today.sh ~/bin/today
 ln -s ~/lib/thus_utils/start.sh ~/bin/start
 ln -s ~/lib/thus_utils/stop.sh ~/bin/stop
 ln -s ~/lib/thus_utils/finish.sh ~/bin/finish
+ln -s ~/lib/thus_utils/home.sh ~/bin/home
+ln -s ~/lib/thus_utils/school.sh ~/bin/school
+ln -s ~/lib/thus_utils/work.sh ~/bin/work
 
 # bash_profile and bashrc
 mkdir ~/.config/

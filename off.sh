@@ -19,6 +19,16 @@ then
     exit
 fi
 
+# Clock out of timetrap
+timetrap out pom
+timetrap out home
+timetrap out school
+timetrap out work
+timetrap out home_schedule
+timetrap out school_schedule
+timetrap out work_schedule
+
+
 # Sync Taskwarrior
 task context none
 task sync
