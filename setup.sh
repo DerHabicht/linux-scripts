@@ -10,6 +10,7 @@ ln -s ~/lib/thus_utils/register.sh ~/bin/register
 ln -s ~/lib/thus_utils/today.sh ~/bin/today
 ln -s ~/lib/thus_utils/start.sh ~/bin/start
 ln -s ~/lib/thus_utils/stop.sh ~/bin/stop
+ln -s ~/lib/thus_utils/finish.sh ~/bin/finish
 
 # bash_profile and bashrc
 mkdir ~/.config/
@@ -40,6 +41,8 @@ git clone git@git.the-hawk.us:misc/cfg/i3rc.git ~/.config/i3/i3rc
 ln -s ~/.config/i3/i3rc/config ~/.config/i3/config
 
 # timetrap
+mkdir -p ~/.timetrap
+git clone git@git.the-hawk.us:misc/cfg/timetrap.git ~/.timetrap/formatters
 ln -s ~/Dropbox/databases/timetrap.db ~/.timetrap.db
 
 # Setup update crontab for server users

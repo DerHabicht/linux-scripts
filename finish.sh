@@ -4,7 +4,7 @@ tasksheet=`cat ~/.tasksheet`
 if [ "$?" == 0 ]
 then
     timetrap out $tasksheet
-    task uuid:`timetrap display --format current_clock $tasksheet` stop
+    task uuid:`timetrap display --format current_clock $tasksheet` done
     rm ~/.tasksheet
     timetrap display $tasksheet
 else

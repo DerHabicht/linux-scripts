@@ -5,4 +5,5 @@ declare -a default_repos=("$HOME/pim"
                           "$HOME/.vim/vimrc"
                           "$HOME/.task/taskrc"
                           "$HOME/.config/emacs"
+                          "$HOME/.timetrap/formatters"
                           "$HOME/.config/i3/i3rc")
