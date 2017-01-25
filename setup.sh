@@ -14,6 +14,7 @@ ln -s ~/lib/thus_utils/finish.sh ~/bin/finish
 ln -s ~/lib/thus_utils/home.sh ~/bin/home
 ln -s ~/lib/thus_utils/school.sh ~/bin/school
 ln -s ~/lib/thus_utils/work.sh ~/bin/work
+ln -s ~/lib/thus_utils/pim.sh ~/bin/pim
 
 # bash_profile and bashrc
 mkdir ~/.config/
