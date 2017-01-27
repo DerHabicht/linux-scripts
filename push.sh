@@ -28,12 +28,14 @@ rm ~/.proj_dirs
 
 if [ "${#failed[@]}" == 1 ]
 then
-    printf "1 repository failed to push:\n"
+    printf "\n$(tput setaf 1)1 repository failed to push:\n"
     printf '    %s\n' "${failed[@]}"
-    echo ""
+    echo "$(tput sgr0)"
 elif [ "${#failed[@]}" > 1 ]
 then
-    printf "\n${#failed[@]} repositories failed to push:\n"
+    printf "\n$(tput setaf 1)${#failed[@]} repositories failed to push:\n"
     printf '    %s\n' "${failed[@]}"
-    echo ""
+    echo "$(tput sgr0)"
+else
+
 fi
