@@ -1,5 +1,6 @@
 # Git repositories to sync by default
 declare -a default_repos=("$HOME/pim.d"
+                          "$HOME/lib/spacemacs"
                           "$HOME/lib/thus_utils"
                           "$HOME/.config/termrc"
                           "$HOME/.vim/vimrc"
