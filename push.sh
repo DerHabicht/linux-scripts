@@ -29,5 +29,5 @@ rm ~/.proj_dirs
 if [ "$failed" ]
 then
     printf "\nThe following repositories failed to push:\n"
-    printf "    ${failed[@]}"
+    printf "    ${failed[@]}\n"
 fi
