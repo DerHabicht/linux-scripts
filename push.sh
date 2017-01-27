@@ -10,6 +10,7 @@ cat ~/.active_proj_dirs >> ~/.proj_dirs
 printf "%s\n" "${default_repos[@]}" >> ~/.proj_dirs
 
 
+failed=()
 while IFS= read -r line
 do
     cd "$line"
@@ -17,6 +18,16 @@ do
     git add *
     git commit -a -m "Automated commit from $HOSTNAME"
     git push
+    if [ "$?" != 0 ]
+    then
+        failed+=(`pwd`)
+    fi
 done < ~/.proj_dirs
 
 rm ~/.proj_dirs
+
+if [ "$failed" ]
+then
+    echo "The following repositories failed to push:"
+    echo "${failed[@]}"
+fi
