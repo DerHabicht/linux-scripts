@@ -26,8 +26,12 @@ done < ~/.proj_dirs
 
 rm ~/.proj_dirs
 
-if [ "$failed" ]
+if [ "${#failed[@]}" == 1 ]
 then
-    printf "\nThe following repositories failed to push:\n"
-    printf "${failed[*]}\n"
+    printf "1 repository failed to push:\n"
+    printf '%s\n' "${failed[@]}"
+elif [ "${#failed[@]}" > 1 ]
+then
+    printf "\n${#failed[@]} repositories failed to push:\n"
+    printf '%s\n' "${failed[@]}"
 fi
