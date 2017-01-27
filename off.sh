@@ -57,7 +57,7 @@ if [ "${#failed[@]}" == 1 ]
 then
     printf "\n$(tput setaf 1)1 repository failed to push:\n"
     printf '    %s\n' "${failed[@]}"
-    echo "$(tput sgr0)"
+    echo "$(tput sgr0) Do you want to continue? (yes/no):"
     read response
     if [ "$response" != "yes" ]
     then
