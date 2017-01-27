@@ -37,5 +37,5 @@ then
     printf '    %s\n' "${failed[@]}"
     echo "$(tput sgr0)"
 else
-
+    printf "\n$(tput setaf 2)All repositories successfully pushed.\n$(tput sgr0)"
 fi
