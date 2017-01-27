@@ -55,14 +55,18 @@ rm ~/.proj_dirs
 
 if [ "${#failed[@]}" == 1 ]
 then
-    echo "1 repository failed to push. Do you want to continue? (yes/no):"
+    printf "\n$(tput setaf 1)1 repository failed to push. Do you want to continue? (yes/no):\n"
+    echo "$(tput sgr0)"
+    read response
     if [ "$response" != "yes" ]
     then
         exit
     fi
 elif [ "${#failed[@]}" > 1 ]
 then
-    echo "${#failed[@]} repositories failed to push. Do you want to continue? (yes/no):"
+    printf "\n$(tput setaf 1)${#failed[@]} repositories failed to push. Do you want to continute? (yes/no):\n"
+    echo "$(tput sgr0)"
+    read response
     if [ "$response" != "yes" ]
     then
         exit
