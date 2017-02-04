@@ -53,7 +53,7 @@ done < ~/.proj_dirs
 
 rm ~/.proj_dirs
 
-if [ "${#failed[@]}" == 1 ]
+if [ ${#failed[@]} == 1 ]
 then
     printf "\n$(tput setaf 1)1 repository failed to push:\n"
     printf '    %s\n' "${failed[@]}"
@@ -64,7 +64,7 @@ then
     then
         exit
     fi
-elif [ "${#failed[@]}" > 1 ]
+elif [ ${#failed[@]} > 1 ]
 then
     printf "\n$(tput setaf 1)${#failed[@]} repositories failed to push:\n"
     printf '    %s\n' "${failed[@]}"
