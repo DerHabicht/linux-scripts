@@ -64,7 +64,7 @@ then
     then
         exit
     fi
-elif [ ${#failed[@]} > 1 ]
+elif [ ${#failed[@]} -gt 1 ]
 then
     printf "\n$(tput setaf 1)${#failed[@]} repositories failed to push:\n"
     printf '    %s\n' "${failed[@]}"
