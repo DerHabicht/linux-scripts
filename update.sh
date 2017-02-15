@@ -22,7 +22,7 @@ do
 done < ~/.active_proj_dirs
 
 uname -r | grep fc
-if [[ $? == 0 ]]
+if [[ $? == 0 && $1 != "--no-yum" ]]
 then
     sudo dnf -y update
 fi
