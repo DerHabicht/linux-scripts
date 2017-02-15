@@ -23,13 +23,14 @@ remove_from_list() {
 exec 3>&2
 exec 2> /dev/null
 
-if [ "$1" == "--show-modified" ]
+if [ "$1" == "-s" ]
 then
-    cat ~/.proj_dirs
-elif [ "$1" == "--show-active" ]
-then
+    echo "[ Active Projects ]"
     cat ~/.active_proj_dirs
-elif [ "$1" == "--mark-inactive" ]
+    echo ""
+    echo "[ Modified Projects ]"
+    cat ~/.proj_dirs
+elif [ "$1" == "-i" ]
 then
     remove_from_list "$HOME/.active_proj_dirs"
     if [ "$?" == 0 ]
@@ -38,7 +39,7 @@ then
     else
         echo "`pwd` could not be removed from the active projects file."
     fi
-elif [ "$1" == "--mark-unmodified" ]
+elif [ "$1" == "-u" ]
 then
     remove_from_list "$HOME/.proj_dirs"
     if [ "$?" == 0 ]
@@ -68,10 +69,9 @@ then
 else
     echo "-r                  Mark repository as modified"
     echo "-a                  Mark repository as active"
-    echo "--mark-unmodified   Remove repo from modified list"
-    echo "--mark-inactive     Remove repo from active list"
-    echo "--show-modified     Print the modified repo list"
-    echo "--show-active       Print the active repo list"
+    echo "-u                  Remove repo from modified list"
+    echo "-i                  Remove repo from active list"
+    echo "-s                  Print the active and modified repo list"
 fi
 
 # Restore the stderr handler
