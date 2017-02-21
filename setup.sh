@@ -43,6 +43,8 @@ ln -s ~/.task/taskrc/taskrc ~/.taskrc
 mkdir -p ~/.config/i3
 git clone git@git.the-hawk.us:misc/cfg/i3rc.git ~/.config/i3/i3rc
 ln -s ~/.config/i3/i3rc/config ~/.config/i3/config
+mkdir -p ~/.config/i3status
+ln -s ~/.config/i3/i3rc/i3status.conf ~/.config/i3status/config
 
 # timetrap
 mkdir -p ~/.timetrap
