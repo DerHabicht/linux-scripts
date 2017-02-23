@@ -1,2 +1,2 @@
 clear
-task today
+task today "$@"
