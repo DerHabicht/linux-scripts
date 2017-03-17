@@ -66,6 +66,10 @@ then
     else
         echo "`pwd` could not be added to the modified projects file."
     fi
+elif [ "$1" == "-n" ]
+then
+    echo "nop" > /dev/null
+fi
 else
     echo "-r                  Mark repository as modified"
     echo "-a                  Mark repository as active"
