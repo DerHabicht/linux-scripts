@@ -12,11 +12,14 @@ else
     echo "Are you sure you want to shutdown $HOSTNAME? (yes/no): "
 fi
 
-read response
-
-if [ "$response" != "yes" ]
+if [ "$1" != "-y" ]
 then
-    exit
+    read response
+
+    if [ "$response" != "yes" ]
+    then
+        exit
+    fi
 fi
 
 # Clock out of timetrap
@@ -58,22 +61,29 @@ then
     printf "\n$(tput setaf 1)1 repository failed to push:\n"
     printf '    %s\n' "${failed[@]}"
     echo "$(tput sgr0)"
-    echo "Do you want to continue? (yes/no):"
-    read response
-    if [ "$response" != "yes" ]
+
+    if [ "$1" != "-y" ]
     then
-        exit
+        echo "Do you want to continue? (yes/no):"
+        read response
+        if [ "$response" != "yes" ]
+        then
+            exit
+        fi
     fi
 elif [ ${#failed[@]} -gt 1 ]
 then
     printf "\n$(tput setaf 1)${#failed[@]} repositories failed to push:\n"
     printf '    %s\n' "${failed[@]}"
     echo "$(tput sgr0)"
-    echo "Do you want to continue? (yes/no):"
-    read response
-    if [ "$response" != "yes" ]
+    if [ "$1" != "-y" ]
     then
-        exit
+        echo "Do you want to continue? (yes/no):"
+        read response
+        if [ "$response" != "yes" ]
+        then
+            exit
+        fi
     fi
 fi
 
