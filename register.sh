@@ -69,7 +69,6 @@ then
 elif [ "$1" == "-n" ]
 then
     echo "nop" > /dev/null
-fi
 else
     echo "-r                  Mark repository as modified"
     echo "-a                  Mark repository as active"
