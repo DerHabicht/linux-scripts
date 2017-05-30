@@ -22,6 +22,9 @@ then
     fi
 fi
 
+# Stop any current tasks
+source "$HOME/lib/thus_utils/stop.sh"
+
 # Clock out of timetrap
 timetrap out pom
 timetrap out home
