@@ -1,6 +1,11 @@
 #!/bin/bash
 
 # USAGE: mkgit PATH REPO_NAME REM_DIR
+if [ "$1" == "" ] || [ "$2" == "" ] || [ "$3" == "" ]
+then
+    echo "Usage: mkgit [PATH] [REPO_NAME] [REM_DIR]"
+    exit
+fi
 
 cd "$2"
 
