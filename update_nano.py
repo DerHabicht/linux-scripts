@@ -10,10 +10,12 @@ from subprocess import PIPE
 if __name__ == "__main__":
 
     if datetime.now().month == 11:
+        # Grab the NaNoWriMo secret key
         with open("/home/the-hawk/.nanocount", 'r') as secret:
             key = secret.read().strip().encode('utf-8')
 
         name = b'the-hawk'
+        # Run word count on the NaNo repo
         count = run(['/home/the-hawk/nanowrimo/build', 'wc'],
                     stdout=PIPE).stdout.strip()
 
