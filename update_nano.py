@@ -31,6 +31,7 @@ if __name__ == "__main__":
                    'wordcount': count.decode('utf-8')}
 
         response = requests.put("http://nanowrimo.org/api/wordcount", payload)
+        print(response)
         print("IF YOU ARE SEEING THIS, YOU HAVEN'T FINISHED TESTING THIS!!!")
     else:
         print("NaNoWriMo not in session. Skipping word count update.")
