@@ -22,16 +22,15 @@ if __name__ == "__main__":
         print(f'NaNoWriMo is in session. Reporting {int(count)} words.')
 
         h = hashlib.sha1()
-        h.update(key)
-        h.update(name)
-        h.update(count)
+        h.update(key + name + count)
 
         payload = {'hash': h.hexdigest(),
                    'name': name.decode('utf-8'),
-                   'wordcount': count.decode('utf-8')}
+                   'wordcount': int(count)}
 
-        response = requests.put("http://nanowrimo.org/api/wordcount", payload)
-        print(response)
+        response = requests.put("http://nanowrimo.org/api/wordcount",
+                                data=payload)
+        print(f'Response: {response.reason}')
         print("IF YOU ARE SEEING THIS, YOU HAVEN'T FINISHED TESTING THIS!!!")
     else:
         print("NaNoWriMo not in session. Skipping word count update.")
