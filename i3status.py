@@ -51,9 +51,11 @@ def build_nano_string():
     goal = get_nano_goal()
     if goal:
         count = get_nano_wordcount()
+        remaining = goal - count
         progress = int(round(count / goal * 100))
         today = datetime.now().day
-        return f'NaNoWriMo (Day {today}): {count} / {goal} ({progress}%)'
+        return (f'NaNoWriMo (Day {today}): {count} / {goal} ({progress}%)'
+                f' - {remaining} remaining)')
     else:
         return None
 
