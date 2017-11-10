@@ -30,32 +30,39 @@ import json
 from subprocess import run
 from subprocess import PIPE
 from datetime import datetime
+from math import ceil
 
 def get_nano_wordcount():
     count = run(['/home/the-hawk/nanowrimo/build', 'wc'], stdout=PIPE)
     return int(count.stdout.decode('utf-8'))
 
-def get_nano_goal():
-    # y = -57.42x² + 3346x + 14.64
+def get_nano_goal(count):
+    today = datetime.now().day
 
-    today = datetime.now()
+    revNaNo = int(round(-57.42 * today ** 2
+                        + 3388.78 * today
+                        + 14.64))
 
-    if today.month == 11:
-        return int(round(-57.42 * today.day ** 2
-                         + 3388.78 * today.day
-                         + 14.64))
+    if (revNaNo - count) > 8000 :
+        return ceil((50000 - count) / (30 - today)) + count
     else:
-        return None
+        return revNaNo
 
 def build_nano_string():
-    goal = get_nano_goal()
-    if goal:
+    today = datetime.now()
+    if today.month == 11:
+        event = "NaNoWriMo"
+    elif today.month == 4 or today.month == 7:
+        event = "Camp NaNoWriMo"
+    else:
+        event = None
+    if event:
         count = get_nano_wordcount()
+        goal = get_nano_goal(count)
         remaining = goal - count
         progress = int(round(count / goal * 100))
-        today = datetime.now().day
-        return (f'NaNoWriMo (Day {today}): {count} / {goal} ({progress}%)'
-                f' - {remaining} remaining)')
+        return (f'{event} (Day {today.day}): {count} / {goal} ({progress}%)'
+                f' - {remaining} remaining')
     else:
         return None
 
