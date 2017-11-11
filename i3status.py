@@ -27,28 +27,23 @@
 import sys
 import json
 
-from subprocess import run
-from subprocess import PIPE
-from datetime import datetime
-from math import ceil
+from datetime import date
+from socket import socket, AF_INET, SOCK_STREAM
 
-def get_nano_wordcount():
-    count = run(['/home/the-hawk/nanowrimo/build', 'wc'], stdout=PIPE)
-    return int(count.stdout.decode('utf-8'))
 
-def get_nano_goal(count):
-    today = datetime.now().day
+def query_nano_status():
+    with socket(AF_INET, SOCK_STREAM) as sock:
+        sock.connect(('localhost', 9270))
+        sock.send(b'WC')
+        resp = sock.recv(64)
 
-    par = 1667 * today
+    payload = resp.decode('utf-8').split('|')
 
-    revNaNo = int(round(-57.42 * today ** 2
-                        + 3388.78 * today
-                        + 14.64))
+    return int(payload[0]), int(payload[1])
 
-    return revNaNo
 
 def build_nano_string():
-    today = datetime.now()
+    today = date.today()
     if today.month == 11:
         event = "NaNoWriMo"
     elif today.month == 4 or today.month == 7:
@@ -56,8 +51,7 @@ def build_nano_string():
     else:
         event = None
     if event:
-        count = get_nano_wordcount()
-        goal = get_nano_goal(count)
+        (count, goal) = query_nano_status()
         remaining = goal - count
         progress = int(round(count / goal * 100))
         return (f'{event} (Day {today.day}): {count} / {goal} ({progress}%)'
@@ -65,10 +59,12 @@ def build_nano_string():
     else:
         return None
 
+
 def print_line(message):
     """ Non-buffered printing to stdout. """
     sys.stdout.write(message + '\n')
     sys.stdout.flush()
+
 
 def read_line():
     """ Interrupted respecting reader for stdin. """
@@ -82,6 +78,7 @@ def read_line():
     # exit on ctrl-c
     except KeyboardInterrupt:
         sys.exit()
+
 
 if __name__ == '__main__':
     # Skip the first line which contains the version header.
@@ -99,7 +96,7 @@ if __name__ == '__main__':
         j = json.loads(line)
         # insert information into the start of the json, but could be anywhere
         # CHANGE THIS LINE TO INSERT SOMETHING ELSE
-        #j.insert(0, {'full_text' : '%s' % get_governor(), 'name' : 'gov'})
+        # j.insert(0, {'full_text' : '%s' % get_governor(), 'name' : 'gov'})
 
         # NaNoWriMo (Day ?): Total Written / Daily Goal (%) |
         nano_status = build_nano_string()
