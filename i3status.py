@@ -39,14 +39,13 @@ def get_nano_wordcount():
 def get_nano_goal(count):
     today = datetime.now().day
 
+    par = 1667 * today
+
     revNaNo = int(round(-57.42 * today ** 2
                         + 3388.78 * today
                         + 14.64))
 
-    if (revNaNo - count) > 8000 :
-        return ceil((50000 - count) / (30 - today)) + count
-    else:
-        return revNaNo
+    return revNaNo
 
 def build_nano_string():
     today = datetime.now()
