@@ -39,6 +39,9 @@ timetrap out work_schedule
 task context none
 task sync
 
+# Update NaNoWriMo wordcount
+update_nano
+
 # Sync relevant Git repositories
 cat ~/.active_proj_dirs >> ~/.proj_dirs
 printf "%s\n" "${default_repos[@]}" >> ~/.proj_dirs
