@@ -27,7 +27,7 @@
 import sys
 import json
 
-from datetime import date
+from datetime import date, timedelta
 from requests import get
 from subprocess import run, PIPE
 from threading import Thread
@@ -51,6 +51,19 @@ class UpdateCount(Thread):
             sleep(20)
 
 
+def get_remote_count():
+    today = str(date.today())
+    r = get("https://nanowrimo.org/wordcount_api/wchistory/the-hawk")
+    root = ElementTree.fromstring(r.text)
+    total_count = int(root.find('user_wordcount').text)
+    wcentries = root.find('wordcounts').findall('wcentry')
+
+    for wcentry in wcentries:
+        if wcentry.find('wcdate').text == today:
+            today_count = int(wcentry.find('wc').text)
+            return total_count - today_count
+
+
 def reverse_nano(day):
     return round(-57.42 * day ** 2 + 3388.78 * day + 14.64)
 
@@ -68,11 +81,16 @@ def set_goal():
         return
 
     if nano_goal_date is None or nano_goal_date != date.today():
+        try:
+            remote_count = get_remote_count()
+        except Exception as err:
+            return
+
         nano_goal_date = date.today()
         par = reverse_nano(nano_goal_date.day)
 
         if (par - current_count) > 8000:
-            nano_goal = goal_to_finish(nano_goal_date.day, current_count)
+            nano_goal = goal_to_finish(nano_goal_date.day, remote_count)
         else:
             nano_goal = par
 
@@ -91,7 +109,7 @@ def build_nano_string():
     else:
         event = None
 
-    if event and current_count:
+    if event and nano_goal and (current_count is not None):
         remaining = nano_goal - current_count
         progress = int(round(current_count / nano_goal * 100))
         nano_str = f'{event} (Day {today.day}): {current_count} / {nano_goal}'
