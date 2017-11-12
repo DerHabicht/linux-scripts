@@ -28,21 +28,61 @@ import sys
 import json
 
 from datetime import date
-from socket import socket, AF_INET, SOCK_STREAM
+from requests import get
+from subprocess import run, PIPE
+from threading import Thread
+from time import sleep
+from xml.etree import ElementTree
+
+NANO_COUNT_CMD = ["/home/the-hawk/nanowrimo/build", "wc"]
+
+current_count = None
+nano_goal_date = None
+nano_goal = 0
 
 
-def query_nano_status():
-    with socket(AF_INET, SOCK_STREAM) as sock:
-        sock.connect(('localhost', 9270))
-        sock.send(b'WC')
-        resp = sock.recv(64)
+class UpdateCount(Thread):
+    def run(self):
+        global current_count
 
-    payload = resp.decode('utf-8').split('|')
+        while True:
+            count_raw = run(NANO_COUNT_CMD, stdout=PIPE).stdout
+            current_count = int(count_raw.decode('utf-8'))
+            sleep(20)
 
-    return int(payload[0]), int(payload[1])
+
+def reverse_nano(day):
+    return round(-57.42 * day ** 2 + 3388.78 * day + 14.64)
+
+
+def goal_to_finish(day, count):
+    return round((50000 - count) / (30 - day) + count)
+
+
+def set_goal():
+    global current_count
+    global nano_goal
+    global nano_goal_date
+
+    if current_count is None:
+        return
+
+    if nano_goal_date is None or nano_goal_date != date.today():
+        nano_goal_date = date.today()
+        par = reverse_nano(nano_goal_date.day)
+
+        if (par - current_count) > 8000:
+            nano_goal = goal_to_finish(nano_goal_date.day, current_count)
+        else:
+            nano_goal = par
 
 
 def build_nano_string():
+    global current_count
+    global nano_goal
+    global nano_goal_date
+
+    set_goal()
     today = date.today()
     if today.month == 11:
         event = "NaNoWriMo"
@@ -50,12 +90,17 @@ def build_nano_string():
         event = "Camp NaNoWriMo"
     else:
         event = None
-    if event:
-        (count, goal) = query_nano_status()
-        remaining = goal - count
-        progress = int(round(count / goal * 100))
-        return (f'{event} (Day {today.day}): {count} / {goal} ({progress}%)'
-                f' - {remaining} remaining')
+
+    if event and current_count:
+        remaining = nano_goal - current_count
+        progress = int(round(current_count / nano_goal * 100))
+        nano_str = f'{event} (Day {today.day}): {current_count} / {nano_goal}'
+        if remaining <= 0:
+            nano_str += f' ({progress}%) - Daily Goal Achieved!'
+        else:
+            nano_str += f' ({progress}%) - {remaining} remaining'
+
+        return nano_str
     else:
         return None
 
@@ -81,6 +126,9 @@ def read_line():
 
 
 if __name__ == '__main__':
+    counter = UpdateCount(daemon=True)
+    counter.start()
+
     # Skip the first line which contains the version header.
     print_line(read_line())
 
