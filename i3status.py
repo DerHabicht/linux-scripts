@@ -89,7 +89,7 @@ def set_goal():
         nano_goal_date = date.today()
         par = reverse_nano(nano_goal_date.day)
 
-        if (par - current_count) > 8000:
+        if (par - current_count) > 4000:
             nano_goal = goal_to_finish(nano_goal_date.day, remote_count)
         else:
             nano_goal = par
