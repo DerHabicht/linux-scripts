@@ -6,17 +6,16 @@ exec 2> /dev/null
 
 clear
 
-tasksheet=`cat ~/.tasksheet`
+context=`task _get rc.context`
 if [ "$?" == 0 ]
 then
-    timetrap out $tasksheet
-    task uuid:`timetrap display --format current_clock $tasksheet` stop
-    rm ~/.tasksheet
-    timetrap display $tasksheet
+    timetrap out $context
+    task uuid:`timetrap display --format current_clock $context` stop
 else
-    echo "No registered task clock."
+    echo "No context set."
 fi
 
+export noclear=1
 active
 
 # Restore the stderr handler
