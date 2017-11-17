@@ -26,9 +26,10 @@ tput civis
 timetrap sheet pom
 timetrap out
 
-# Start the clock
+# Start the clock and play a startup sound
 start=`$date +%s`
 timetrap in
+mplayer -msglevel all=0 ~/lib/thus_utils/beeps/computerbeep_9.mp3
 
 # Catch Ctl-C so we can gracefully exit the loop
 trap 'break' INT

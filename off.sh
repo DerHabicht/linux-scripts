@@ -25,15 +25,13 @@ fi
 # Stop any current tasks
 source "$HOME/lib/thus_utils/stop.sh"
 
-# Clock out of timetrap
-timetrap out pom
-timetrap out home
-timetrap out school
-timetrap out work
-timetrap out home_schedule
-timetrap out school_schedule
-timetrap out work_schedule
+# Deactivate projects
+1="done"
+source "$HOME/lib/thus_utils/active.sh"
 
+# Clock out of context
+1="out"
+source "$HOME/lib/thus_utils/punch.sh"
 
 # Sync Taskwarrior
 task context none
