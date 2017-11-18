@@ -111,12 +111,12 @@ def build_nano_string():
 
     if event and nano_goal and (current_count is not None):
         remaining = nano_goal - current_count
-        progress = int(round(current_count / nano_goal * 100))
+        progress = int(round(current_count / 50000 * 100))
         nano_str = f'{event} (Day {today.day}): {current_count} / {nano_goal}'
         if remaining <= 0:
-            nano_str += f' ({progress}%) - Daily Goal Achieved!'
+            nano_str += f' - Daily Goal Achieved! ({progress}%)'
         else:
-            nano_str += f' ({progress}%) - {remaining} remaining'
+            nano_str += f' - {remaining} remaining ({progress}%)'
 
         return nano_str
     else:
