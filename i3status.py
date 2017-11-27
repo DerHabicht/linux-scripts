@@ -84,6 +84,7 @@ def set_goal():
         try:
             remote_count = get_remote_count()
         except Exception as err:
+            nano_goal_date = None
             return
 
         nano_goal_date = date.today()
