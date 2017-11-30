@@ -69,7 +69,7 @@ def reverse_nano(day):
 
 
 def goal_to_finish(day, count):
-    return round((50000 - count) / (30 - day) + count)
+    return round((50000 - count) / (31 - day) + count)
 
 
 def set_goal():
