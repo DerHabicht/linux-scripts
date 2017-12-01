@@ -45,7 +45,7 @@ class UpdateCount(Thread):
     def run(self):
         global current_count
 
-        while True:
+        while date.today().month == 11:
             count_raw = run(NANO_COUNT_CMD, stdout=PIPE).stdout
             current_count = int(count_raw.decode('utf-8'))
             sleep(20)
