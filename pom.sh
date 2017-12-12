@@ -71,6 +71,9 @@ timetrap out
 # Play finish sound indicating that we've clocked out.
 mplayer -msglevel all=0 ~/lib/thus_utils/beeps/alert04.mp3
 
+# Fire a notification dialog so we aren't dependent on the sound
+zenity --info --title="Pomodoro" --text="Pomodoro Finished."
+
 # Restore the stderr handler
 exec 2>&3
 

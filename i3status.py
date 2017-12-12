@@ -45,7 +45,7 @@ class UpdateCount(Thread):
     def run(self):
         global current_count
 
-        while True:
+        while date.today().month == 11:
             count_raw = run(NANO_COUNT_CMD, stdout=PIPE).stdout
             current_count = int(count_raw.decode('utf-8'))
             sleep(20)
@@ -69,7 +69,7 @@ def reverse_nano(day):
 
 
 def goal_to_finish(day, count):
-    return round((50000 - count) / (30 - day) + count)
+    return round((50000 - count) / (31 - day) + count)
 
 
 def set_goal():
@@ -84,9 +84,14 @@ def set_goal():
         try:
             remote_count = get_remote_count()
         except Exception as err:
+            nano_goal_date = None
             return
 
         nano_goal_date = date.today()
+        if nano_goal_date.day == 24:
+            nano_goal = 40000
+            return
+
         par = reverse_nano(nano_goal_date.day)
 
         if (par - current_count) > 4000:

@@ -37,6 +37,8 @@ source "$HOME/lib/thus_utils/punch.sh"
 task context none
 task sync
 
+echo "Here"
+
 # Update NaNoWriMo wordcount
 update_nano
 
