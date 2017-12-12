@@ -22,6 +22,17 @@ then
 elif [ "$1" ]
 then
     echo $1 > ~/.taskproj
+
+    if [ -d "$HOME/$1" ]
+    then
+        cd "$1"
+        git status
+        if [ "$?" == 0 ]
+        then
+            $HOME/lib/thus_utils/register.sh -r
+        fi
+    fi
+
     echo "Activated project $1."
     task project:$1
 else
