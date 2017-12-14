@@ -1,6 +1,7 @@
 # Git repositories to sync by default
 declare -a default_repos=("$HOME/org"
                           "$HOME/blog"
+                          "$HOME/journal"
                           "$HOME/wiki"
                           "$HOME/lib/spacemacs"
                           "$HOME/lib/thus_utils"
