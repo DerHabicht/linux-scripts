@@ -23,15 +23,13 @@ then
 fi
 
 # Stop any current tasks
-source "$HOME/lib/thus_utils/stop.sh"
+"$HOME/lib/thus_utils/stop.sh"
 
 # Deactivate projects
-1="done"
-source "$HOME/lib/thus_utils/active.sh"
+"$HOME/lib/thus_utils/active.sh done"
 
 # Clock out of context
-1="out"
-source "$HOME/lib/thus_utils/punch.sh"
+"$HOME/lib/thus_utils/punch.sh out"
 
 # Sync Taskwarrior
 task context none
