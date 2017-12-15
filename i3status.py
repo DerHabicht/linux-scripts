@@ -45,7 +45,7 @@ class UpdateCount(Thread):
     def run(self):
         global current_count
 
-        while True:
+        while date.today().month == 11:
             count_raw = run(NANO_COUNT_CMD, stdout=PIPE).stdout
             current_count = int(count_raw.decode('utf-8'))
             sleep(20)
@@ -69,7 +69,7 @@ def reverse_nano(day):
 
 
 def goal_to_finish(day, count):
-    return round((50000 - count) / (30 - day) + count)
+    return round((50000 - count) / (31 - day) + count)
 
 
 def set_goal():
@@ -84,9 +84,14 @@ def set_goal():
         try:
             remote_count = get_remote_count()
         except Exception as err:
+            nano_goal_date = None
             return
 
         nano_goal_date = date.today()
+        if nano_goal_date.day == 24:
+            nano_goal = 40000
+            return
+
         par = reverse_nano(nano_goal_date.day)
 
         if (par - current_count) > 4000:
@@ -111,12 +116,12 @@ def build_nano_string():
 
     if event and nano_goal and (current_count is not None):
         remaining = nano_goal - current_count
-        progress = int(round(current_count / nano_goal * 100))
+        progress = int(round(current_count / 50000 * 100))
         nano_str = f'{event} (Day {today.day}): {current_count} / {nano_goal}'
         if remaining <= 0:
-            nano_str += f' ({progress}%) - Daily Goal Achieved!'
+            nano_str += f' - Daily Goal Achieved! ({progress}%)'
         else:
-            nano_str += f' ({progress}%) - {remaining} remaining'
+            nano_str += f' - {remaining} remaining ({progress}%)'
 
         return nano_str
     else:
