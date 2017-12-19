@@ -6,6 +6,7 @@ if [ -a $journal_path ]
 then
     gvim $journal_path
 else
-    printf "%s\ndate: %s\n...\n\n" "---" `date +"%Y-%m-%d"` > $journal_path
+    printf "%s\ndate_: %s\ntlp_: RED\n...\n\n" "---" `date +"%Y-%m-%d"` \
+        > $journal_path
     gvim $journal_path +X
 fi
