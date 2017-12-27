@@ -11,17 +11,17 @@ fi
 
 if [ "$1" == "done" ]
 then
-    thisproj=`cat $HOME/.taskproj`
+    thisproj=`cat $HOME/.proj_task`
     if [ "$?" == 0 ]
     then
-        rm $HOME/.taskproj
+        rm $HOME/.proj_task
         echo "Project $thisproj is now inactive."
     else
         echo "No active project."
     fi
 elif [ "$1" ]
 then
-    echo $1 > $HOME/.taskproj
+    echo $1 > $HOME/.proj_task
 
     if [ -d "$HOME/$1" ]
     then
@@ -36,7 +36,7 @@ then
     echo "Activated project $1."
     task project:$1
 else
-    thisproj=`cat $HOME/.taskproj`
+    thisproj=`cat $HOME/.proj_task`
     if [ "$?" == 0 ]
     then
         task project:$thisproj

@@ -41,8 +41,8 @@ echo "Here"
 update_nano
 
 # Sync relevant Git repositories
-cat ~/.active_proj_dirs >> ~/.proj_dirs
-printf "%s\n" "${default_repos[@]}" >> ~/.proj_dirs
+cat ~/.proj_active >> ~/.proj_modified
+printf "%s\n" "${default_repos[@]}" >> ~/.proj_modified
 
 failed=()
 while IFS= read -r line
@@ -56,9 +56,9 @@ do
     then
         failed+=(`pwd`)
     fi
-done < ~/.proj_dirs
+done < ~/.proj_modified
 
-rm ~/.proj_dirs
+rm ~/.proj_modified
 
 if [ ${#failed[@]} == 1 ]
 then

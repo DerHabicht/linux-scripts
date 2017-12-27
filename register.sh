@@ -26,13 +26,13 @@ exec 2> /dev/null
 if [ "$1" == "-s" ]
 then
     echo "[ Active Projects ]"
-    cat ~/.active_proj_dirs
+    cat ~/.proj_active
     echo ""
     echo "[ Modified Projects ]"
-    cat ~/.proj_dirs
+    cat ~/.proj_modified
 elif [ "$1" == "-i" ]
 then
-    remove_from_list "$HOME/.active_proj_dirs"
+    remove_from_list "$HOME/.proj_active"
     if [ "$?" == 0 ]
     then
         echo "`pwd` has been removed from the active projects file."
@@ -41,7 +41,7 @@ then
     fi
 elif [ "$1" == "-u" ]
 then
-    remove_from_list "$HOME/.proj_dirs"
+    remove_from_list "$HOME/.proj_modified"
     if [ "$?" == 0 ]
     then
         echo "`pwd` has been removed from the modified projects file."
@@ -50,7 +50,7 @@ then
     fi
 elif [ "$1" == "-a" ]
 then
-    add_to_list "$HOME/.active_proj_dirs"
+    add_to_list "$HOME/.proj_active"
     if [ "$?" == 0 ]
     then
         echo "`pwd` has been added to the active projects file."
@@ -59,7 +59,7 @@ then
     fi
 elif [ "$1" == "-r" ]
 then
-    add_to_list "$HOME/.proj_dirs"
+    add_to_list "$HOME/.proj_modified"
     if [ "$?" == 0 ]
     then
         echo "`pwd` has been added to the modified projects file."

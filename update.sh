@@ -19,7 +19,7 @@ do
     cd "$line"
     printf "\nPulling `pwd`...\n"
     git pull
-done < ~/.active_proj_dirs
+done < ~/.proj_active
 
 uname -r | grep fc
 if [[ $? == 0 && $1 != "--no-yum" ]]

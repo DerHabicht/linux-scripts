@@ -6,8 +6,8 @@ source "$HOME/lib/thus_utils/default_repos.sh"
 task sync
 
 # Sync relevant Git repositories
-cat ~/.active_proj_dirs >> ~/.proj_dirs
-printf "%s\n" "${default_repos[@]}" >> ~/.proj_dirs
+cat ~/.proj_active >> ~/.proj_modified
+printf "%s\n" "${default_repos[@]}" >> ~/.proj_modified
 
 
 failed=()
@@ -22,9 +22,9 @@ do
     then
         failed+=(`pwd`)
     fi
-done < ~/.proj_dirs
+done < ~/.proj_modified
 
-rm ~/.proj_dirs
+rm ~/.proj_modified
 
 if [ "${#failed[@]}" == 1 ]
 then
