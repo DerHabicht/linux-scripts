@@ -2,7 +2,11 @@ add_to_list() {
     git status > /dev/null
     if [ "$?" == 0 ]
     then
-        pwd >> "$1"
+        grep "`pwd`" "$1" > /dev/null
+        if [ "$?" == 1 ]
+        then
+            pwd >> "$1"
+        fi
         return 0
     else
         echo "`pwd` is not a Git repository."
