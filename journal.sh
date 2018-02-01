@@ -1,12 +1,18 @@
 #!/bin/bash
 
-journal_path=$HOME/journal/`date +'%Y'`/`date +'%B'`/`date +'%Y-%m-%d'`.md
+journal_path=$HOME/journal/`date +'%Y'`/`date +'%B'`
+journal_file=$journal_path/`date +'%Y-%m-%d'`.md
 
-if [ -a $journal_path ]
+if [ ! -d "$journal_path" ]
 then
-    gvim $journal_path
+    mkdir -p $journal_path
+fi
+
+if [ -a $journal_file ]
+then
+    gvim $journal_file
 else
     printf "%s\ndate_: %s\ntlp_: RED\n...\n\n" "---" `date +"%Y-%m-%d"` \
-        > $journal_path
-    gvim $journal_path +X
+        > $journal_file
+    gvim $journal_file +X
 fi
