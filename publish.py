@@ -29,6 +29,10 @@ def get_published(path):
     post_list = []
     for (directory, _, filenames) in walk(f"{path}/_posts"):
         for filename in filenames:
+            # Ignore Vim swap files
+            if search(".*\.swp", filename):
+                continue
+
             path = f"{directory}/{filename}"
             # See publish() for error explanations
             try:
@@ -44,6 +48,10 @@ def get_drafts(path):
     post_list = []
     for (directory, _, filenames) in walk(f"{path}/_drafts"):
         for filename in filenames:
+            # Ignore Vim swap files
+            if search(".*\.swp", filename):
+                continue
+
             path = f"{directory}/{filename}"
             # See publish() for error explanations
             try:
