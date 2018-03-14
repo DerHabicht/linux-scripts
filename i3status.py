@@ -45,7 +45,7 @@ class UpdateCount(Thread):
     def run(self):
         global current_count
 
-        while date.today().month == 11:
+        while date.today().month in [4, 7, 11]:
             count_raw = run(NANO_COUNT_CMD, stdout=PIPE).stdout
             current_count = int(count_raw.decode('utf-8'))
             sleep(20)
@@ -109,7 +109,7 @@ def build_nano_string():
     today = date.today()
     if today.month == 11:
         event = "NaNoWriMo"
-    elif today.month == 4 or today.month == 7:
+    elif today.month in [4,7]:
         event = "Camp NaNoWriMo"
     else:
         event = None
