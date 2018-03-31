@@ -10,4 +10,5 @@ declare -a default_repos=("$HOME/org"
                           "$HOME/.task/taskrc"
                           "$HOME/.config/emacs"
                           "$HOME/.timetrap/formatters"
-                          "$HOME/.config/i3/i3rc")
+                          "$HOME/.config/i3/i3rc"
+                          "$HOME/texmf")
