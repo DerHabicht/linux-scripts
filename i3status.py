@@ -34,7 +34,7 @@ from threading import Thread
 from time import sleep
 from xml.etree import ElementTree
 
-NANO_COUNT_CMD = ["/home/the-hawk/nanowrimo/build", "wc"]
+NANO_COUNT_CMD = ["make", "wc"]
 
 current_count = None
 nano_goal_date = None
@@ -46,7 +46,9 @@ class UpdateCount(Thread):
         global current_count
 
         while date.today().month in [4, 7, 11]:
-            count_raw = run(NANO_COUNT_CMD, stdout=PIPE).stdout
+            count_raw = run(NANO_COUNT_CMD,
+                            cwd="/home/the-hawk/nanowrimo",
+                            stdout=PIPE).stdout
             current_count = int(count_raw.decode('utf-8'))
             sleep(20)
 
