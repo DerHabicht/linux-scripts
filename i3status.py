@@ -55,7 +55,10 @@ class UpdateCount(Thread):
 
 def get_remote_count():
     today = str(date.today())
-    r = get("https://nanowrimo.org/wordcount_api/wchistory/the-hawk")
+    if date.today().month == 11:
+        r = get("https://nanowrimo.org/wordcount_api/wchistory/the-hawk")
+    else:
+        r = get("https://www.the-hawk.us/meh/wc.xml")
     root = ElementTree.fromstring(r.text)
     total_count = int(root.find('user_wordcount').text)
     wcentries = root.find('wordcounts').findall('wcentry')
