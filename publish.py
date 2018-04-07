@@ -1,6 +1,6 @@
 #!/usr/bin/python3.6
 from curses import A_STANDOUT, curs_set, noecho, wrapper
-from os import rename, walk
+from os import environ, rename, walk
 from os.path import basename
 from re import DOTALL, search, sub
 from sys import argv
@@ -12,7 +12,7 @@ DRAFTS = 0
 PUBLISHED = 1
 
 # The blog path passed in via argument
-blog_path = ""
+blog_path = f'{environ["HOME"]}/blog'
 
 
 # Will throw an exception if there is no valid YAML
@@ -21,7 +21,7 @@ def get_yaml(path):
     with open(path, "r") as pf:
         post = pf.read()
 
-    fms = search(r"---(.+)---", post, flags=DOTALL)
+    fms = search(r"---(.+?)---", post, flags=DOTALL)
     return load(fms.group(1))
 
 
@@ -151,7 +151,6 @@ def main(stdscr, posts):
 
 
 if __name__ == "__main__":
-    blog_path = argv[1]
     try:
         drafts = get_drafts(blog_path)
         published = get_published(blog_path)
@@ -159,5 +158,5 @@ if __name__ == "__main__":
     except IndexError:
         print("")
         print("Usage:")
-        print("    python3.6 publish.py [BLOG_PATH]")
+        print("    python3.6 publish.py")
         print("")
