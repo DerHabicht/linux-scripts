@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python3.6
 # -*- coding: utf-8 -*-
 
 # This script is a simple wrapper which prefixes each i3status line with custom
@@ -28,6 +28,7 @@ import sys
 import json
 
 from datetime import date, timedelta
+from os import environ
 from requests import get
 from subprocess import run, PIPE
 from threading import Thread
@@ -153,6 +154,14 @@ def read_line():
         sys.exit()
 
 
+def active_project():
+    try:
+        with open(f'{environ["HOME"]}/.proj_task', 'r') as active_project:
+            return active_project.read().strip()
+    except FileNotFoundError:
+        return None
+
+
 if __name__ == '__main__':
     counter = UpdateCount(daemon=True)
     counter.start()
@@ -179,6 +188,12 @@ if __name__ == '__main__':
         if nano_status:
             j.insert(0, {'full_text' : '%s' % nano_status,
                          'name' : 'nanowrimo'})
+
+        # Active Project: [project]
+        active = active_project()
+        if active:
+            j.insert(0, {'full_text' : 'Active Project: %s' % active,
+                         'name' : 'activeproj'})
 
         # and echo back new encoded json
         print_line(prefix+json.dumps(j))

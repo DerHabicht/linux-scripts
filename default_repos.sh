@@ -11,4 +11,5 @@ declare -a default_repos=("$HOME/org"
                           "$HOME/.config/emacs"
                           "$HOME/.timetrap/formatters"
                           "$HOME/.config/i3/i3rc"
+                          "$HOME/Documents/home/SOP"
                           "$HOME/texmf")
