@@ -138,3 +138,7 @@ else
     crontab tempcron
     rm tempcron
 fi
+
+echo "Next steps:"
+echo "  - Address problems with these installs"
+echo "  - Install Go, NVM, RVM, and VirtualEnv"
