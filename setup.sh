@@ -57,6 +57,18 @@ git config --global core.editor vim
 uname -r | grep fc
 if [[ $? == 0 ]]
 then
+    # Install Spacemacs
+    sudo dnf install emacs
+    rm -rf emacs.d
+    rm -rf .emacs
+    git clone git@git.the-hawk.us:misc/spacemacs.git $HOME/.emacs.d
+
+    # Blog, wiki, and PIM links
+    git clone git@git.the-hawk.us:www/home/sundry-musings.com.git
+    ln -s $HOME/devel/www/sundry-musings.com $HOME/blog
+    git clone git@git.the-hawk.us:misc/wiki.git
+    git clone git@git.the-hawk.us:misc/org.git
+
     # Install dekstop-only utilities
     echo "Setting up status file..."
     echo "FALCON 1" > $HOME/.thus
