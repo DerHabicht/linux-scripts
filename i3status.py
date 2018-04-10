@@ -27,7 +27,7 @@
 import sys
 import json
 
-from datetime import date, timedelta
+from datetime import date
 from os import environ
 from requests import get
 from subprocess import run, PIPE
@@ -89,7 +89,7 @@ def set_goal():
     if nano_goal_date is None or nano_goal_date != date.today():
         try:
             remote_count = get_remote_count()
-        except Exception as err:
+        except Exception:
             nano_goal_date = None
             return
 
@@ -115,7 +115,7 @@ def build_nano_string():
     today = date.today()
     if today.month == 11:
         event = "NaNoWriMo"
-    elif today.month in [4,7]:
+    elif today.month in [4, 7]:
         event = "Camp NaNoWriMo"
     else:
         event = None
@@ -162,6 +162,46 @@ def active_project():
         return None
 
 
+def read_fal():
+    FAL_COLORS = {
+        'FAL 1': {
+            'name': 'fal',
+            'full_text': 'FAL: 1',
+            'color': '#0080FF',
+        },
+        'FAL 2': {
+            'name': 'fal',
+            'full_text': 'FAL: 2',
+            'color': '#00FF00',
+        },
+        'FAL 3': {
+            'name': 'fal',
+            'full_text': 'FAL: 3',
+            'color': '#FFFF00',
+        },
+        'FAL 4': {
+            'name': 'fal',
+            'full_text': 'FAL: 4',
+            'color': '#FF8000',
+        },
+        'FAL 5': {
+            'name': 'fal',
+            'full_text': 'FAL: 5',
+            'color': '#FF0000',
+        },
+    }
+    try:
+        with open(f'{environ["HOME"]}/.thus', 'r') as fal_file:
+            fal = fal_file.read().strip()
+    except FileNotFoundError:
+        return FAL_COLORS['FAL 2']
+
+    try:
+        return FAL_COLORS[fal]
+    except KeyError:
+        return FAL_COLORS['FAL 5']
+
+
 if __name__ == '__main__':
     counter = UpdateCount(daemon=True)
     counter.start()
@@ -186,14 +226,16 @@ if __name__ == '__main__':
         # NaNoWriMo (Day ?): Total Written / Daily Goal (%) |
         nano_status = build_nano_string()
         if nano_status:
-            j.insert(0, {'full_text' : '%s' % nano_status,
-                         'name' : 'nanowrimo'})
+            j.insert(0, {'full_text': '%s' % nano_status,
+                         'name': 'nanowrimo'})
 
         # Active Project: [project]
         active = active_project()
         if active:
-            j.insert(0, {'full_text' : 'Active Project: %s' % active,
-                         'name' : 'activeproj'})
+            j.insert(0, {'full_text': 'Active Project: %s' % active,
+                         'name': 'activeproj'})
+
+        j.append(read_fal())
 
         # and echo back new encoded json
         print_line(prefix+json.dumps(j))
