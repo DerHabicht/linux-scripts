@@ -164,12 +164,12 @@ def active_project():
 
 def read_fal():
     FAL_COLORS = {
-        'FALCON 5': {
+        'FALCON 1': {
             'name': 'fal',
             'full_text': 'FALCON: 1',
             'color': '#0080FF',
         },
-        'FALCON 4': {
+        'FALCON 2': {
             'name': 'fal',
             'full_text': 'FALCON: 2',
             'color': '#00FF00',
@@ -179,12 +179,12 @@ def read_fal():
             'full_text': 'FALCON: 3',
             'color': '#FFFF00',
         },
-        'FALCON 2': {
+        'FALCON 4': {
             'name': 'fal',
             'full_text': 'FALCON: 4',
             'color': '#FF8000',
         },
-        'FALCON 1': {
+        'FALCON 5': {
             'name': 'fal',
             'full_text': 'FALCON: 5',
             'color': '#FF0000',
