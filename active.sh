@@ -29,7 +29,7 @@ then
         git status
         if [ "$?" == 0 ]
         then
-            $HOME/lib/thus_utils/register.sh -r
+            $HOME/lib/thus-utils/register.sh -r
         fi
     fi
 

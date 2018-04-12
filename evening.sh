@@ -21,4 +21,4 @@ do
     sleep 60
 done
 
-$HOME/lib/thus_utils/off -y
+$HOME/lib/thus-utils/off -y

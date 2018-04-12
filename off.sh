@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source "$HOME/lib/thus_utils/default_repos.sh"
+source "$HOME/lib/thus-utils/default_repos.sh"
 
 if [ "$1" == "-r" ]
 then
@@ -22,14 +22,8 @@ then
     fi
 fi
 
-# Stop any current tasks
-$HOME/lib/thus_utils/stop.sh
-
 # Deactivate projects
-$HOME/lib/thus_utils/active.sh done
-
-# Clock out of context
-$HOME/lib/thus_utils/punch.sh out
+$HOME/lib/thus-utils/active.sh done
 
 # Sync Taskwarrior
 task context none

@@ -24,7 +24,7 @@ timetrap out
 end=$((`date +%s` + $seconds))
 next_tick=$((`date +%s` + $tick))
 timetrap in
-mplayer -msglevel all=0 ~/lib/thus_utils/beeps/computerbeep_9.mp3
+mplayer -msglevel all=0 ~/lib/thus-utils/beeps/computerbeep_9.mp3
 
 # Catch Ctl-C so we can gracefully exit the loop
 trap 'break' INT
@@ -53,7 +53,7 @@ do
     # Play the 'tick' sound
     if [ "$next_tick" -le `date +%s` ]
     then
-        mplayer -msglevel all=0 ~/lib/thus_utils/beeps/computerbeep_4.mp3
+        mplayer -msglevel all=0 ~/lib/thus-utils/beeps/computerbeep_4.mp3
         next_tick=$((`date +%s` + $tick))
     fi
 done
@@ -69,7 +69,7 @@ timetrap sheet pom
 timetrap out
 
 # Play finish sound indicating that we've clocked out.
-mplayer -msglevel all=0 ~/lib/thus_utils/beeps/alert04.mp3
+mplayer -msglevel all=0 ~/lib/thus-utils/beeps/alert04.mp3
 
 # Fire a notification dialog so we aren't dependent on the sound
 zenity --info --title="Pomodoro" --text="Pomodoro Finished."

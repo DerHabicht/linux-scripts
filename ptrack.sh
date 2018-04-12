@@ -29,7 +29,7 @@ timetrap out
 # Start the clock and play a startup sound
 start=`$date +%s`
 timetrap in
-mplayer -msglevel all=0 ~/lib/thus_utils/beeps/computerbeep_9.mp3
+mplayer -msglevel all=0 ~/lib/thus-utils/beeps/computerbeep_9.mp3
 
 # Catch Ctl-C so we can gracefully exit the loop
 trap 'break' INT
@@ -67,7 +67,7 @@ timetrap sheet pom
 timetrap out
 
 # Play finish sound indicating that we've clocked out.
-mplayer -msglevel all=0 ~/lib/thus_utils/beeps/alert04.mp3
+mplayer -msglevel all=0 ~/lib/thus-utils/beeps/alert04.mp3
 
 # Restore the stderr handler
 exec 2>&3

@@ -17,7 +17,7 @@ exec 2> /dev/null
 tput civis
 
 # Play start sound
-mplayer -msglevel all=0 ~/lib/thus_utils/beeps/computerbeep_9.mp3
+mplayer -msglevel all=0 ~/lib/thus-utils/beeps/computerbeep_9.mp3
 
 # Catch Ctl-C so we can gracefully exit the loop
 trap 'interrupted=1;break' INT
@@ -28,7 +28,7 @@ while [ "$ret_val" != 0 ]
 do
     clear
     echo "Attempting to ping $1...                 "
-    mplayer -msglevel all=0 ~/lib/thus_utils/beeps/computerbeep_4.mp3
+    mplayer -msglevel all=0 ~/lib/thus-utils/beeps/computerbeep_4.mp3
     ping -c 1 -W 5 "$1" > /dev/null
     ret_val=$?
 done
@@ -40,7 +40,7 @@ then
     do
         clear
         echo "Connection detected!"
-        mplayer -msglevel all=0 ~/lib/thus_utils/beeps/alert04.mp3
+        mplayer -msglevel all=0 ~/lib/thus-utils/beeps/alert04.mp3
         sleep 1
     done
 else

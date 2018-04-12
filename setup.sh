@@ -25,6 +25,10 @@ git config --global gpg.program gpg2
 git config --global user.name "Robert Herschel Hawk"
 git config --global user.email "robert@the-hawk.us"
 git config --global user.signingkey $key
+git config --global core.excludesfile $HOME/.gitignore_global
+echo "*.swp" > $HOME/.gitignore_global
+echo "*.swo" >> $HOME/.gitignore_global
+echo "*.twparse" >> $HOME/.gitignore_global
 
 # THUS Utils
 echo "Setting up THUS utliities..."
@@ -34,11 +38,11 @@ ln -s $HOME/lib/thus-utils/fal.sh $HOME/bin/fal
 ln -s $HOME/lib/thus-utils/off.sh $HOME/bin/off
 ln -s $HOME/lib/thus-utils/pim.sh $HOME/bin/pim
 ln -s $HOME/lib/thus-utils/publish.sh $HOME/bin/publish
-ln -s $HOME/lib/push.sh $HOME/bin/push
-ln -s $HOME/lib/register.sh $HOME/bin/register
-ln -s $HOME/lib/start_gollum.sh $HOME/bin/start_gollum
-ln -s $HOME/lib/update.sh $HOME/bin/update
-ln -s $HOME/lib/update_nano.sh $HOME/bin/update_nano
+ln -s $HOME/lib/thus-utilspush.sh $HOME/bin/push
+ln -s $HOME/lib/thus-utilsregister.sh $HOME/bin/register
+ln -s $HOME/lib/thus-utilsstart_gollum.sh $HOME/bin/start_gollum
+ln -s $HOME/lib/thus-utilsupdate.sh $HOME/bin/update
+ln -s $HOME/lib/thus-utilsupdate_nano.sh $HOME/bin/update_nano
 
 # bash_profile and bashrc
 echo "Setting up bash profile..."
@@ -142,3 +146,4 @@ fi
 echo "Next steps:"
 echo "  - Address problems with these installs"
 echo "  - Install Go, NVM, RVM, and VirtualEnv"
+echo "  - Install KeePassx and add DB keys"

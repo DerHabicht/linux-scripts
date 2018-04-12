@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source "$HOME/lib/thus_utils/default_repos.sh"
+source "$HOME/lib/thus-utils/default_repos.sh"
 
 # Sync Taskwarrior
 task sync
