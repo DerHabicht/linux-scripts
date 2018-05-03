@@ -29,6 +29,7 @@ import json
 
 from datetime import date
 from os import environ
+from re import search
 from requests import get
 from subprocess import run, PIPE
 from threading import Thread
@@ -202,6 +203,17 @@ def read_fal():
         return FAL_COLORS['FAL 5']
 
 
+def read_layout():
+    layout = run(['setxkbmap', '-query'], stdout=PIPE).stdout
+    layout = layout.decode('utf-8')
+    layout = search(r'layout:\s+(.+)', layout).group(1)
+    return {
+        'name': 'layout',
+        'full_text': layout,
+        'color': '#FFFFFF',
+    }
+
+
 if __name__ == '__main__':
     counter = UpdateCount(daemon=True)
     counter.start()
@@ -222,6 +234,7 @@ if __name__ == '__main__':
         # insert information into the start of the json, but could be anywhere
         # CHANGE THIS LINE TO INSERT SOMETHING ELSE
         # j.insert(0, {'full_text' : '%s' % get_governor(), 'name' : 'gov'})
+        j.insert(1, read_layout())
 
         # NaNoWriMo (Day ?): Total Written / Daily Goal (%) |
         nano_status = build_nano_string()

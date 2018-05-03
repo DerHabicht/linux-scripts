@@ -38,11 +38,12 @@ ln -s $HOME/lib/thus-utils/fal.sh $HOME/bin/fal
 ln -s $HOME/lib/thus-utils/off.sh $HOME/bin/off
 ln -s $HOME/lib/thus-utils/pim.sh $HOME/bin/pim
 ln -s $HOME/lib/thus-utils/publish.sh $HOME/bin/publish
-ln -s $HOME/lib/thus-utilspush.sh $HOME/bin/push
-ln -s $HOME/lib/thus-utilsregister.sh $HOME/bin/register
-ln -s $HOME/lib/thus-utilsstart_gollum.sh $HOME/bin/start_gollum
-ln -s $HOME/lib/thus-utilsupdate.sh $HOME/bin/update
-ln -s $HOME/lib/thus-utilsupdate_nano.sh $HOME/bin/update_nano
+ln -s $HOME/lib/thus-utils/push.sh $HOME/bin/push
+ln -s $HOME/lib/thus-utils/register.sh $HOME/bin/register
+ln -s $HOME/lib/thus-utils/start_gollum.sh $HOME/bin/start_gollum
+ln -s $HOME/lib/thus-utils/update.sh $HOME/bin/update
+ln -s $HOME/lib/thus-utils/update_nano.sh $HOME/bin/update_nano
+ln -s $HOME/lib/thus-utils/layout.sh $HOME/bin/layout
 
 # bash_profile and bashrc
 echo "Setting up bash profile..."
