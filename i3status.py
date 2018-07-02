@@ -236,11 +236,11 @@ if __name__ == '__main__':
         # j.insert(0, {'full_text' : '%s' % get_governor(), 'name' : 'gov'})
         j.insert(1, read_layout())
 
-        # NaNoWriMo (Day ?): Total Written / Daily Goal (%) |
-        nano_status = build_nano_string()
-        if nano_status:
-            j.insert(0, {'full_text': '%s' % nano_status,
-                         'name': 'nanowrimo'})
+        ## NaNoWriMo (Day ?): Total Written / Daily Goal (%) |
+        #nano_status = build_nano_string()
+        #if nano_status:
+        #    j.insert(0, {'full_text': '%s' % nano_status,
+        #                 'name': 'nanowrimo'})
 
         # Active Project: [project]
         active = active_project()
