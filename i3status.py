@@ -1,4 +1,4 @@
-#!/usr/bin/python3.6
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
 # This script is a simple wrapper which prefixes each i3status line with custom
