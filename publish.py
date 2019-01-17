@@ -1,4 +1,4 @@
-#!/usr/bin/python3.6
+#!/usr/bin/python3
 from curses import A_STANDOUT, curs_set, noecho, wrapper
 from os import environ, rename, walk
 from os.path import basename
