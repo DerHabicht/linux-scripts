@@ -29,8 +29,6 @@ $HOME/lib/thus-utils/active.sh done
 task context none
 task sync
 
-echo "Here"
-
 # Update NaNoWriMo wordcount
 update_nano
 

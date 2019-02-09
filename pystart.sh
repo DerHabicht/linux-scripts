@@ -306,7 +306,7 @@ mkdir $proj_name
 cd $proj_name
 
 # Set up Conda
-conda create docopt yaml "$@" -n $proj_name
+conda create docopt pyyaml "$@" -n $proj_name
 source activate $proj_name
 conda env export > environment.yml
 source deactivate

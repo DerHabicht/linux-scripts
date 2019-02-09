@@ -3,7 +3,7 @@ add_to_list() {
     if [ "$?" == 0 ]
     then
         grep "`pwd`" "$1" > /dev/null
-        if [ "$?" == 1 ]
+        if [ "$?" -gt "0" ]
         then
             pwd >> "$1"
         fi
