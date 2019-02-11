@@ -275,11 +275,12 @@ def initial_config():
     return config
 
 
-def router(arguments):
+def router(config, arguments):
     """Command router
 
     Routes the arguments from the command line.
 
+    :param config:     application configuration dictionary
     :param arguments:  docopt arguments dictionary
     """
     pass
@@ -297,7 +298,7 @@ if __name__ == '__main__':
     # Parse arguments
     arguments = docopt(__doc__, version=VERSION)
 
-    router(arguments)
+    router(config, arguments)
 EOF
 
 
