@@ -219,6 +219,8 @@ EOF
 read -d '' bash_init <<EOF
 #!/bin/bash
 
+. /etc/profile.d/conda.sh
+
 SOURCE="\${BASH_SOURCE[0]}"
 while [ -h "\$SOURCE" ]; do
     DIR="\$( cd -P "\$( dirname "\$SOURCE" )" >/dev/null && pwd )"
