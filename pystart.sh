@@ -289,6 +289,9 @@ def router(config, arguments):
 
 
 if __name__ == '__main__':
+    # Parse arguments
+    arguments = docopt(__doc__, version=VERSION)
+
     # Parse configuration file
     os.makedirs(CONFIG_PATH, exist_ok=True)
     try:
@@ -296,9 +299,6 @@ if __name__ == '__main__':
             config = yaml.load(cfile)
     except FileNotFoundError:
         config = initial_config()
-
-    # Parse arguments
-    arguments = docopt(__doc__, version=VERSION)
 
     router(config, arguments)
 EOF
