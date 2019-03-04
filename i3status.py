@@ -195,12 +195,12 @@ def read_fal():
         with open(f'{environ["HOME"]}/.thus', 'r') as fal_file:
             fal = fal_file.read().strip()
     except FileNotFoundError:
-        return FAL_COLORS['FAL 2']
+        return FAL_COLORS['FALCON 2']
 
     try:
         return FAL_COLORS[fal]
     except KeyError:
-        return FAL_COLORS['FAL 5']
+        return FAL_COLORS['FALCON 5']
 
 
 def read_layout():
