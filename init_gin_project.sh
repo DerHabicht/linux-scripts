@@ -9,6 +9,13 @@ import (
 func init() {
 	_ = gotenv.Load()
 	viper.AutomaticEnv()
+
+	viper.SetDefault("ENV", "development")
+	viper.SetDefault("URL", "localhost:3000")
+	viper.SetDefault("DB_HOST", "localhost")
+	viper.SetDefault("DB_USER", "postgres")
+	viper.SetDefault("DB_NAME", "$2_development")
+	viper.SetDefault("DB_PASSWORD", "postgres")
 }
 EOF
 )
@@ -46,6 +53,36 @@ func init() {
 EOF
 )
 
+HEALTH=$(cat <<EOF
+package controllers
+
+import (
+	"github.com/gin-gonic/gin"
+	"net/http"
+)
+
+type ServiceStatus struct{
+	Status string \`json:"status"\`
+}
+
+type HealthController struct{
+}
+
+// Healthcheck handler.
+// @Summary Check to assure that the service is running.
+// @Description A no-op endpoint that will return a 200. This is a very basic healthcheck and will not verify that
+// @Description services such as the database are currently running.
+// @Success 200 {object} controllers.ServiceStatus
+// @Router /health [get]
+func (h HealthController) Up(c *gin.Context) {
+	s := ServiceStatus{
+		Status: "UP",
+	}
+	c.JSON(http.StatusOK, s)
+}
+EOF
+)
+
 SEED=$(cat <<EOF
 package main
 
@@ -70,6 +107,51 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+}
+EOF
+)
+
+MAIN=$(cat <<EOF
+package main
+
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/spf13/viper"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+
+	_ "github.com/$1/$2/config"
+	"github.com/$1/$2/controllers"
+	_ "github.com/$1/$2/db"
+	_ "github.com/$1/$2/docs"
+)
+
+// @title $1 $2
+// @version 0.1.0
+// @description UPDATE DESCRIPTION FIELD
+
+// @contact.name UPDATE CONTACT NAME
+// @contact.email UPDATE CONTACT EMAIL
+
+// @license.name MIT License
+// @license.url https://opensource.org/licenses/MIT
+
+// @host UPDATE HOST
+// @BasePath /api/v1
+func main() {
+	router := gin.Default()
+	v1 := router.Group("/api/v1")
+	{
+		// Visit {host}/api/v1/swagger/index.html to see the API documentation.
+		v1.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
+		health := new(controllers.HealthController)
+		{
+			v1.GET("/health", health.Up)
+		}
+	}
+
+	_ = router.Run(viper.GetString("url"))
 }
 EOF
 )
@@ -127,14 +209,17 @@ curl https://raw.githubusercontent.com/github/choosealicense.com/gh-pages/_licen
 git add LICENSE
 curl https://gist.githubusercontent.com/PurpleBooth/109311bb0361f32d87a2/raw/8254b53ab8dcb18afc64287aaddd9e5b6059f880/README-Template.md > README.md
 git add README.md
+
+echo "$MAIN" > main.go
+git add main.go
  
 mkdir config
 echo "$CONFIG" > config/config.go
 git add config/config.go
 
 mkdir controllers
-touch controllers/.gitkeep
-git add controllers/.gitkeep
+echo "$HEALTH" > controllers/health.go
+git add controllers/health.go
 
 mkdir db
 echo "$DB" > db/db.go
@@ -153,8 +238,15 @@ echo "$MODELS" > models/models.go
 git add models/models.go
  
 dep init
+swag init
+git add docs/docs.go
+git add docs/swagger.json
+git add docs/swagger.yaml
+dep ensure
 git add Gopkg.lock
 git add Gopkg.toml
 
 git commit -m "Initial commit"
 git flow init
+
+psql -U postgres -c "CREATE DATABASE $2_development;"
