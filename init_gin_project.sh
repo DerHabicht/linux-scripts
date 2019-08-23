@@ -53,6 +53,25 @@ func init() {
 EOF
 )
 
+GITIGNORE=$(cat <<EOF
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with \`go test -c\`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Dependency directories (remove the comment below to include it)
+vendor/
+EOF
+)
+
 HEALTH=$(cat <<EOF
 package controllers
 
@@ -80,6 +99,116 @@ func (h HealthController) Up(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, s)
 }
+EOF
+)
+
+LICENSE=$(cat <<EOF
+MIT License
+
+Copyright (c) $(date +%Y) Robert Hawk
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+EOF
+)
+
+# Adapted from this template: https://gist.githubusercontent.com/PurpleBooth/109311bb0361f32d87a2/raw/8254b53ab8dcb18afc64287aaddd9e5b6059f880/README-Template.md
+README=$(cat <<EOF
+# $1 $2
+
+One Paragraph of project description goes here
+
+## Getting Started
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+
+### Prerequisites
+  - Go 1.12.5 (or later)
+  - Postgres 11.4 (or later)
+  - [Dep](https://github.com/golang/dep)
+  - [Migrate](https://github.com/golang-migrate/migrate)
+  - [Swaggo CLI](https://github.com/swaggo/swag)
+
+### Installing
+  1. \`git clone git@github.com:$1/$2.git\`
+  2. \`psql -U postgres -c "CREATE DATABASE $2_development;"\`
+  3. \`migrate -source file://db/migrations -database postgres://localhost:5432/$2_development?sslmode=disable up\`
+  4. \`go run db/seed/seed.go\`
+  5. \`go run main.go\`
+
+## Running the tests
+
+Explain how to run the automated tests for this system
+
+### Break down into end to end tests
+
+Explain what these tests test and why
+
+\`\`\`
+Give an example
+\`\`\`
+
+### And coding style tests
+
+Explain what these tests test and why
+
+\`\`\`
+Give an example
+\`\`\`
+
+## Deployment
+
+Add additional notes about how to deploy this on a live system
+
+## Built With
+
+* [Gin](https://gin-gonic.com) - API framework
+* [Dep](https://golang.github.io/dep/) - Dependency Management
+* [Postgres](https://postgresql.org) - Database
+* [Migrate](https://github.com/golang-migrate/migrate) - Database Migrations
+* [Swaggo](https://github.com/swaggo/swag) - API Documentation
+
+## Contributing
+Before committing, be sure to:
+ 1. Use [Git Flow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow)
+ 2. [Sign your commits](https://git-scm.com/book/ms/v2/Git-Tools-Signing-Your-Work)
+ 3. Run \`gofmt -s\'
+ 4. Run \`swag init\`
+
+## Versioning
+
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+
+## Authors
+
+* **Robert Hawk** - *Initial work* - [DerHabicht](https://github.com/DerHabicht)
+
+See also the list of [contributors](https://github.com/$1/$2/contributors) who participated in this project.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+## Acknowledgments
+
+* Hat tip to anyone whose code was used
+* Inspiration
+* etc
 EOF
 )
 
@@ -203,11 +332,11 @@ fi
 cd "$GOPATH/src/github.com/$1/$2"
 git init
  
-curl https://raw.githubusercontent.com/github/gitignore/master/Go.gitignore > .gitignore
+echo "$GITIGNORE" > .gitignore
 git add .gitignore
-curl https://raw.githubusercontent.com/github/choosealicense.com/gh-pages/_licenses/mit.txt > LICENSE
+echo "$LICENSE" > LICENSE
 git add LICENSE
-curl https://gist.githubusercontent.com/PurpleBooth/109311bb0361f32d87a2/raw/8254b53ab8dcb18afc64287aaddd9e5b6059f880/README-Template.md > README.md
+echo "$README" > README.md
 git add README.md
 
 echo "$MAIN" > main.go
