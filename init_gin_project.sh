@@ -80,24 +80,38 @@ import (
 	"net/http"
 )
 
-type ServiceStatus struct{
-	Status string \`json:"status"\`
+type ServiceStatus struct {
+	Services map[string]bool \`json:"status"\`
+	Version  string          \`json:"version"\`
 }
 
-type HealthController struct{
+type HealthController struct {
+	Status ServiceStatus
+}
+
+// NewHealthController initializes a HealthController.
+func NewHealthController() HealthController {
+	return HealthController{
+		Status: ServiceStatus{
+			Services: make(map[string]bool),
+			Version:  "0.1.0",
+		},
+	}
 }
 
 // Healthcheck handler.
 // @Summary Check to assure that the service is running.
-// @Description A no-op endpoint that will return a 200. This is a very basic healthcheck and will not verify that
-// @Description services such as the database are currently running.
+// @Description Healthcheck endpoint. Reports which statuses are currently
+// @Description running and the current API\'s version number. If critical
+// @Description services are running, it will return 200. If any of the
+// @Description critical services are down, then the endpoint will return 503.
 // @Success 200 {object} controllers.ServiceStatus
+// @Failure 503 {object} controllers.ServiceStatus
 // @Router /health [get]
-func (h HealthController) Up(c *gin.Context) {
-	s := ServiceStatus{
-		Status: "UP",
-	}
-	c.JSON(http.StatusOK, s)
+func (h HealthController) HealthCheck(c *gin.Context) {
+	h.Status.Services["endpoint"] = true
+
+	c.JSON(http.StatusOK, h.Status)
 }
 EOF
 )
@@ -124,6 +138,80 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+EOF
+)
+
+MAIN=$(cat <<EOF
+package main
+
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/spf13/viper"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+
+	_ "github.com/$1/$2/config"
+	"github.com/$1/$2/controllers"
+	_ "github.com/$1/$2/db"
+	_ "github.com/$1/$2/docs"
+)
+
+// @title $1 $2
+// @version 0.1.0
+// @description UPDATE DESCRIPTION FIELD
+
+// @contact.name UPDATE CONTACT NAME
+// @contact.email UPDATE CONTACT EMAIL
+
+// @license.name MIT License
+// @license.url https://opensource.org/licenses/MIT
+
+// @host UPDATE HOST
+// @BasePath /api/v1
+func main() {
+	router := gin.Default()
+	v1 := router.Group("/api/v1")
+	{
+		// Visit {host}/api/v1/swagger/index.html to see the API documentation.
+		v1.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
+        health := controllers.NewHealthController()
+		{
+			v1.GET("/health", health.HealthCheck)
+		}
+	}
+
+	_ = router.Run(viper.GetString("url"))
+}
+EOF
+)
+
+MODELS=$(cat <<EOF
+package models
+
+import (
+	"encoding/json"
+	"fmt"
+	"time"
+)
+
+type ValidationErrors []string
+
+func (v ValidationErrors) Error() string {
+	verrs, err := json.Marshal(v)
+	if err != nil {
+		panic(fmt.Errorf("marshalling of validation errors failed: %v", err))
+	}
+
+	return string(verrs)
+}
+
+type ModelBase struct {
+	ID        uint       \`json:"-" gorm:"primary_key"\`
+	CreatedAt time.Time  \`json:"-"\`
+	UpdatedAt time.Time  \`json:"-"\`
+	DeletedAt *time.Time \`json:"-"\`
+}
 EOF
 )
 
@@ -240,82 +328,7 @@ func main() {
 EOF
 )
 
-MAIN=$(cat <<EOF
-package main
-
-import (
-	"github.com/gin-gonic/gin"
-	"github.com/spf13/viper"
-	swaggerFiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
-
-	_ "github.com/$1/$2/config"
-	"github.com/$1/$2/controllers"
-	_ "github.com/$1/$2/db"
-	_ "github.com/$1/$2/docs"
-)
-
-// @title $1 $2
-// @version 0.1.0
-// @description UPDATE DESCRIPTION FIELD
-
-// @contact.name UPDATE CONTACT NAME
-// @contact.email UPDATE CONTACT EMAIL
-
-// @license.name MIT License
-// @license.url https://opensource.org/licenses/MIT
-
-// @host UPDATE HOST
-// @BasePath /api/v1
-func main() {
-	router := gin.Default()
-	v1 := router.Group("/api/v1")
-	{
-		// Visit {host}/api/v1/swagger/index.html to see the API documentation.
-		v1.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-
-		health := new(controllers.HealthController)
-		{
-			v1.GET("/health", health.Up)
-		}
-	}
-
-	_ = router.Run(viper.GetString("url"))
-}
-EOF
-)
-
-MODELS=$(cat <<EOF
-package models
-
-import (
-	"encoding/json"
-	"fmt"
-	"time"
-)
-
-type ValidationErrors []string
-
-func (v ValidationErrors) Error() string {
-	verrs, err := json.Marshal(v)
-	if err != nil {
-		panic(fmt.Errorf("marshalling of validation errors failed: %v", err))
-	}
-
-	return string(verrs)
-}
-
-type ModelBase struct {
-	ID        uint       \`json:"-" gorm:"primary_key"\`
-	CreatedAt time.Time  \`json:"-"\`
-	UpdatedAt time.Time  \`json:"-"\`
-	DeletedAt *time.Time \`json:"-"\`
-}
-EOF
-)
-
 #!/bin/bash
-
 if [ "$1" == "" ] || [ "$2" == "" ]
 then
     echo "Please provide a namespace and project name."
@@ -332,50 +345,70 @@ fi
 cd "$GOPATH/src/github.com/$1/$2"
 git init
  
+echo "Creating .gitignore"
 echo "$GITIGNORE" > .gitignore
 git add .gitignore
+echo "Creating LICENSE"
 echo "$LICENSE" > LICENSE
 git add LICENSE
+echo "Creating README.md"
 echo "$README" > README.md
 git add README.md
 
+echo "Creating main.go"
 echo "$MAIN" > main.go
 git add main.go
  
+echo "Creating config directory"
 mkdir config
+echo "Creating config/config.go"
 echo "$CONFIG" > config/config.go
 git add config/config.go
 
+echo "Creating controllers directory"
 mkdir controllers
+echo "Creating controllers/health.go"
 echo "$HEALTH" > controllers/health.go
 git add controllers/health.go
 
+echo "Creating db directory"
 mkdir db
+echo "Creating db/db.go"
 echo "$DB" > db/db.go
 git add db/db.go
+echo "Creating db/migrations directory"
 mkdir db/migrations
 touch db/migrations/.gitkeep
 git add db/migrations/.gitkeep
+echo "Creating db/seed directory"
 mkdir db/seed
+echo "Creating db/seed/development.yml"
 touch db/seed/development.yml
 git add db/seed/development.yml
+echo "Creating db/seed/seed.go"
 echo "$SEED" > db/seed/seed.go
 git add db/seed/seed.go
 
+echo "Creating models directory"
 mkdir models
+echo "Creating models/models.go"
 echo "$MODELS" > models/models.go
 git add models/models.go
  
+echo "Initializing Dep"
 dep init
+echo "Initializing Swaggo"
 swag init
 git add docs/docs.go
 git add docs/swagger.json
 git add docs/swagger.yaml
 dep ensure
+echo "Refreshing Dep"
 git add Gopkg.lock
 git add Gopkg.toml
 
 git commit -m "Initial commit"
 git flow init
 
+echo "Creating development database"
 psql -U postgres -c "CREATE DATABASE $2_development;"
