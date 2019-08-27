@@ -108,7 +108,7 @@ func NewHealthController() HealthController {
 // @Success 200 {object} controllers.ServiceStatus
 // @Failure 503 {object} controllers.ServiceStatus
 // @Router /health [get]
-func (h HealthController) HealthCheck(c *gin.Context) {
+func (h HealthController) Check(c *gin.Context) {
 	h.Status.Services["endpoint"] = true
 
 	c.JSON(http.StatusOK, h.Status)
@@ -177,7 +177,7 @@ func main() {
 
         health := controllers.NewHealthController()
 		{
-			v1.GET("/health", health.HealthCheck)
+			v1.GET("/health", health.Check)
 		}
 	}
 
