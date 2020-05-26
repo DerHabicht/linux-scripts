@@ -163,44 +163,44 @@ def active_project():
         return None
 
 
-def read_fal():
-    FAL_COLORS = {
-        'FALCON 5': {
-            'name': 'fal',
-            'full_text': 'FALCON: 5',
+def read_readcon():
+    READCON_COLORS = {
+        'READCON 5': {
+            'name': 'readcon',
+            'full_text': 'READCON: 5',
             'color': '#0080FF',
         },
-        'FALCON 4': {
-            'name': 'fal',
-            'full_text': 'FALCON: 4',
+        'READCON 4': {
+            'name': 'readcon',
+            'full_text': 'READCON: 4',
             'color': '#00FF00',
         },
-        'FALCON 3': {
-            'name': 'fal',
-            'full_text': 'FALCON: 3',
+        'READCON 3': {
+            'name': 'readcon',
+            'full_text': 'READCON: 3',
             'color': '#FFFF00',
         },
-        'FALCON 2': {
-            'name': 'fal',
-            'full_text': 'FALCON: 2',
+        'READCON 2': {
+            'name': 'readcon',
+            'full_text': 'READCON: 2',
             'color': '#FF8000',
         },
-        'FALCON 1': {
-            'name': 'fal',
-            'full_text': 'FALCON: 1',
+        'READCON 1': {
+            'name': 'readcon',
+            'full_text': 'READCON: 1',
             'color': '#FF0000',
         },
     }
     try:
-        with open(f'{environ["HOME"]}/.thus', 'r') as fal_file:
-            fal = fal_file.read().strip()
+        with open(f'{environ["HOME"]}/.readcon', 'r') as readcon_file:
+            readcon = readcon_file.read().strip()
     except FileNotFoundError:
-        return FAL_COLORS['FALCON 2']
+        return READCON_COLORS['READCON 5']
 
     try:
-        return FAL_COLORS[fal]
+        return READCON_COLORS[readcon]
     except KeyError:
-        return FAL_COLORS['FALCON 5']
+        return READCON_COLORS['READCON 5']
 
 
 def read_layout():
@@ -236,11 +236,11 @@ if __name__ == '__main__':
         # j.insert(0, {'full_text' : '%s' % get_governor(), 'name' : 'gov'})
         j.insert(1, read_layout())
 
-        ## NaNoWriMo (Day ?): Total Written / Daily Goal (%) |
-        #nano_status = build_nano_string()
-        #if nano_status:
-        #    j.insert(0, {'full_text': '%s' % nano_status,
-        #                 'name': 'nanowrimo'})
+        # NaNoWriMo (Day ?): Total Written / Daily Goal (%) |
+        nano_status = build_nano_string()
+        if nano_status:
+            j.insert(0, {'full_text': '%s' % nano_status,
+                         'name': 'nanowrimo'})
 
         # Active Project: [project]
         active = active_project()
@@ -248,7 +248,7 @@ if __name__ == '__main__':
             j.insert(0, {'full_text': 'Active Project: %s' % active,
                          'name': 'activeproj'})
 
-        j.append(read_fal())
+        j.append(read_readcon())
 
         # and echo back new encoded json
         print_line(prefix+json.dumps(j))
